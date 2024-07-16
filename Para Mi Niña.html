@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi niña</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            position: relative;
+            background-color: #d0d0d0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #000000;
+            cursor: url('C:\Users\welve\OneDrive\Pictures\pngimg.com - cursor_PNG54.png'), auto; /* Cursor retro */
+        }
+
+        /* Barra de búsqueda retro */
+        .search-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: calc(100% - 17px); /* Ajuste para la barra de desplazamiento */
+            background-color: #c0c0c0;
+            border: 3px solid #000000;
+            box-shadow: 0px 0px 10px #888888;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .search-bar input[type="text"] {
+            width: 80%;
+            padding: 5px;
+            border: 2px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .search-bar button {
+            background-color: #0000ff;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px #888888;
+        }
+
+        .search-bar button:hover {
+            background-color: #000099;
+        }
+
+        .window-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .window-controls button {
+            background-color: #ff0000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px #888888;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .window-controls .minimize {
+            background-color: #ffff00;
+        }
+
+        .window-controls .hide {
+            background-color: #00ff00;
+        }
+
+        .window-controls .close {
+            background-color: #ff0000;
+        }
+
+        .raindrop {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .marquee-container {
+            width: 100%;
+            background-color: #ffc1ff;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            height: 120px; /* Ampliado para el contenedor del texto */
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 15px #888888;
+            font-family: 'Arial', sans-serif;
+            padding-top: 10px; /* Ajustado para que el contenido no se solape con la barra de búsqueda */
+            box-sizing: border-box;
+        }
+
+        .marquee-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 18px; /* Reducido para que el texto encaje mejor */
+            margin: 0;
+        }
+
+        .marquee-text marquee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .marquee-text img {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px; /* Espacio entre el texto y los GIFs */
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(calc(100vh + 50px));
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid #000000;
+            padding: 20px;
+            background-color: #ffc1ff;
+            box-shadow: 5px 5px 15px #888888;
+            font-family: 'Arial', sans-serif;
+            margin-top: 140px; /* Ajustado para dejar espacio para la barra de búsqueda y el contenedor del texto */
+            box-sizing: border-box;
+            margin-bottom: 120px; /* Para dejar espacio antes del final de la página y la barra de desplazamiento */
+        }
+
+        .text {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            box-shadow: 3px 3px 10px #888888;
+            padding: 10px;
+        }
+
+        .image {
+            width: 100%;
+            max-width: 970px;
+            height: auto;
+            border: 3px solid #000000;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 5px 5px 15px #888888;
+        }
+
+        .image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .audio-popup-trigger {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #0000ff;
+            color: #ffffff;
+            padding: 10px;
+            border: 2px solid #000000;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px #888888;
+            z-index: 1000;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .audio-popup {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 15px #888888;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .audio-popup .close-button {
+            background-color: #ff0000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 2px 2px 5px #888888;
+            margin-bottom: 10px;
+        }
+
+        .rainbow-text {
+            position: absolute;
+            top: 150px; /* Ajustado para que aparezca entre los contenedores */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 150px; /* Aumentado para mayor visibilidad */
+            font-weight: bold;
+            white-space: nowrap;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-move 5s linear infinite, rgb-move 3s linear infinite, spin 3s linear infinite;
+            z-index: 1000;
+            text-shadow: 2px 2px 5px #888888;
+        }
+
+        @keyframes rainbow-move {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes rgb-move {
+            0% { color: red; }
+            25% { color: orange; }
+            50% { color: yellow; }
+            75% { color: green; }
+            100% { color: blue; }
+        }
+
+        @keyframes spin {
+            0% { transform: translateX(-50%) rotateY(0deg); }
+            100% { transform: translateX(-50%) rotateY(360deg); }
+        }
+
+        /* Estilo para el video secreto */
+        #secret-video {
+            position: absolute;
+            top: 300px; /* Ajustado para que aparezca debajo del texto secreto */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 5px 5px 15px #888888;
+        }
+
+        /* Media Queries para diseño responsive */
+        @media (max-width: 768px) {
+            .marquee-container {
+                height: 100px;
+            }
+
+            .marquee-text {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-top: 120px;
+                margin-bottom: 80px;
+            }
+
+            .image {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .rainbow-text {
+                font-size: 100px;
+                top: 100px;
+            }
+
+            #secret-video {
+                width: 90%;
+                max-width: 500px;
+                top: 250px;
+            }
+
+            .search-bar input[type="text"] {
+                width: 70%;
+            }
+
+            .search-bar button {
+                font-size: 12px;
+                padding: 3px 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-container {
+                height: 80px;
+            }
+
+            .marquee-text {
+                font-size: 14px;
+            }
+
+            .content {
+                margin-top: 100px;
+                margin-bottom: 60px;
+            }
+
+            .rainbow-text {
+                font-size: 70px;
+                top: 80px;
+            }
+
+            #secret-video {
+                width: 100%;
+                max-width: 400px;
+                top: 200px;
+            }
+
+            .search-bar input[type="text"] {
+                width: 60%;
+            }
+
+            .search-bar button {
+                font-size: 10px;
+                padding: 2px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de búsqueda retro -->
+<div class="search-bar">
+    <input type="text" id="search-box" placeholder="Buscar...">
+    <button id="search-button">Buscar</button>
+    <div class="window-controls">
+        <button class="minimize">_</button>
+        <button class="hide">_</button>
+        <button class="close">X</button>
+    </div>
+</div>
+
+<!-- Contenedor del texto en movimiento -->
+<div class="marquee-container">
+    <div class="marquee-text">
+        <marquee
+ width="1300"
+ behavior="alternate"
+ <marquee behavior= "alternate"><img src="https://i.pinimg.com/originals/15/1d/a9/151da98ceef9a9a54a7eac4af04be712.gif" width="50px" height="50px" alt=""> <font color="#000000" size= 20 font-family="Courier New, courier, monospace" text-align: center <h3>FELIZ ANIVERSARIO MI BRIANITA HERMOSA</h3> </font><img src="https://i.pinimg.com/originals/15/1d/a9/151da98ceef9a9a54a7eac4af04be712.gif" width="50px" height="50px" alt=""></marquee>
+    </div>
+</div>
+
+<!-- Contenido principal -->
+<div class="content">
+    <div class="text">
+        <p>¿Quién diría que nos tomaría 2 años y 11 meses de duro trabajo poder festejar este único mes como novios? Estoy eternamente agradecido de compartir mis días contigo, de hablarte de mí, de reír a tu lado, de besarte, de tomar tu mano, de que compartas tus días conmigo, de que me hables de ti, de que rías a mi lado, estoy eternamente agradecido porque eres y serás la mejor compañera de vida para mí, por siempre amor mío, espero que podamos gozar de muchos más meses y años juntos, espero que tengamos la gracia de poder compartir esta eternidad y las que siguen juntos, como mejores amigos, como novios y como esposos, no estoy jugando cuando digo que amo todo de ti y cuando digo que me quiero casar contigo, mi niña hermosa. ¡FELICIDADES!</p>
+    </div>
+    <div class="image">
+        <img src="https://i.pinimg.com/736x/6e/d3/a2/6ed3a279437c47f7fa627434e4ee7358.jpg" alt="Imagen de novios">
+    </div>
+</div>
+
+<!-- Reproductor de video de YouTube -->
+<div class="audio-popup-trigger">La canción de nuestra boda ❤️</div>
+<div class="audio-popup">
+    <button class="close-button">Cerrar</button>
+    <iframe src="https://www.youtube.com/embed/sq3awlDqAVo" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<!-- Mensaje secreto -->
+<div id="secret-message" class="rainbow-text" style="display: none;">¡Así empezó todo!</div>
+
+<!-- Video emergente -->
+<video id="secret-video">
+    <source src="C:\Users\welve\OneDrive\Documentos\GitHub\ijustmakeopinions.github.io\Videos\Y2meta.app-Holy Moly Meme-(480p).mp4" type="video/mp4">
+    Tu navegador no soporta la etiqueta de video.
+</video>
+
+<script>
+    // Configuración de las imágenes de la lluvia
+    const imageUrls = [
+        'https://i.pinimg.com/736x/a4/8c/04/a48c04f7e95802b1ddad18808dee4c99.jpg', 
+        'https://stickerly.pstatic.net/sticker_pack/GKxNn91GyJYvRhMszE6eOQ/XJ2XIR/25/84108036.png',
+        'https://pbs.twimg.com/media/GGSkqQ7W0AAKxAd.jpg'
+    ];
+
+    // Configuración de la lluvia
+    const numberOfRaindrops = 50; 
+
+    function createRaindrop() {
+        const raindrop = document.createElement('div');
+        raindrop.className = 'raindrop';
+        raindrop.style.backgroundImage = `url(${imageUrls[Math.floor(Math.random() * imageUrls.length)]})`;
+        raindrop.style.left = `${Math.random() * 100}vw`;
+        raindrop.style.top = `-${Math.random() * 100}px`; 
+        document.body.appendChild(raindrop);
+
+        // Animación de caída
+        const animationDuration = Math.random() * 5 + 5; // Duración aleatoria entre 5s y 10s
+        raindrop.style.animation = `fall ${animationDuration}s linear infinite`;
+    }
+
+    // Crear y animar las gotas de lluvia
+    for (let i = 0; i < numberOfRaindrops; i++) {
+        createRaindrop();
+    }
+    
+    // Mostrar el reproductor de audio
+    const audioPopupTrigger = document.querySelector('.audio-popup-trigger');
+    const audioPopup = document.querySelector('.audio-popup');
+    const closeButton = document.querySelector('.audio-popup .close-button');
+
+    audioPopupTrigger.addEventListener('click', () => {
+        audioPopup.style.display = 'flex';
+    });
+
+    closeButton.addEventListener('click', () => {
+        audioPopup.style.display = 'none';
+    });
+
+    // Mostrar mensaje secreto al buscar
+    const searchButton = document.getElementById('search-button');
+    const searchBox = document.getElementById('search-box');
+    const secretMessage = document.getElementById('secret-message');
+    const secretVideo = document.getElementById('secret-video');
+
+    searchButton.addEventListener('click', () => {
+        if (searchBox.value === '16/06/2024') {
+            secretMessage.style.display = 'block';
+            secretVideo.style.display = 'block';
+
+            // Reproducir video
+            secretVideo.play();
+
+            // Ocultar mensaje y video cuando termine el video
+            secretVideo.addEventListener('ended', () => {
+                secretMessage.style.display = 'none';
+                secretVideo.style.display = 'none';
+            });
+        } else {
+            secretMessage.style.display = 'none';
+            secretVideo.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Configurar el historial de búsqueda falso
+        const searchBox = document.getElementById('search-box');
+        const searchButton = document.getElementById('search-button');
+
+        // Crear un elemento para mostrar el historial de búsqueda
+        const historyContainer = document.createElement('div');
+        historyContainer.className = 'search-history';
+        historyContainer.style.display = 'none';
+        historyContainer.style.position = 'absolute';
+        historyContainer.style.top = '50px';
+        historyContainer.style.left = '0';
+        historyContainer.style.width = '100%';
+        historyContainer.style.maxWidth = 'calc(100% - 20px)';
+        historyContainer.style.backgroundColor = '#c0c0c0';
+        historyContainer.style.border = '1px solid #000000';
+        historyContainer.style.boxShadow = '0px 0px 10px #888888';
+        historyContainer.style.zIndex = '1000';
+        historyContainer.style.padding = '10px';
+        historyContainer.style.boxSizing = 'border-box';
+
+        // Añadir historial de búsqueda
+        const historyItems = [
+            'como sé si me ama igual q yo a ella?',
+            '¿soy lo suficientemente atractivo para brianana?',
+            'ola t amo guapa :3',
+            'como saber si enserio le gsuto'
+        ];
+
+        historyItems.forEach(item => {
+            const div = document.createElement('div');
+            div.textContent = item;
+            div.style.padding = '5px';
+            div.style.borderBottom = '1px solid #000000';
+            div.style.cursor = 'pointer';
+            div.addEventListener('click', () => {
+                searchBox.value = item;
+                historyContainer.style.display = 'none'; // Ocultar el historial al seleccionar un elemento
+            });
+            historyContainer.appendChild(div);
+        });
+
+        // Añadir el contenedor del historial de búsqueda al body
+        document.body.appendChild(historyContainer);
+
+        // Mostrar el historial de búsqueda cuando el usuario está escribiendo
+        searchBox.addEventListener('focus', () => {
+            historyContainer.style.display = 'block';
+        });
+
+        // Ocultar el historial cuando el usuario hace clic fuera del input
+        document.addEventListener('click', (event) => {
+            if (!searchBox.contains(event.target) && !historyContainer.contains(event.target)) {
+                historyContainer.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
