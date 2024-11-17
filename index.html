@@ -57,10 +57,47 @@
             background-color: #000099;
         }
 
-        /* Contenedor del texto en movimiento (ahora estático) */
+        .window-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .window-controls button {
+            background-color: #ff0000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px #888888;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .window-controls .minimize {
+            background-color: #ffff00;
+        }
+
+        .window-controls .hide {
+            background-color: #00ff00;
+        }
+
+        .window-controls .close {
+            background-color: #ff0000;
+        }
+
+        .raindrop {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
         .marquee-container {
             width: 100%;
-            background-color: #c0c0c0;
+            background-color: #ffc1ff;
             margin: 0;
             overflow: hidden;
             position: relative;
@@ -84,40 +121,69 @@
             margin: 0;
         }
 
-        /* Estilo para el video secreto */
-        #secret-video {
-            position: absolute;
-            top: 300px; /* Ajustado para que aparezca debajo del texto secreto */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            display: none;
-            z-index: 1000;
-            box-shadow: 5px 5px 15px #888888;
+        .marquee-text marquee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .audio-popup {
-            position: fixed;
-            bottom: 80px;
-            left: 20px;
-            display: none;
+        .marquee-text img {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px; /* Espacio entre el texto y los GIFs */
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(calc(100vh + 50px));
+            }
+        }
+
+        .content {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #ffffff;
             border: 3px solid #000000;
+            padding: 20px;
+            background-color: #ffc1ff;
             box-shadow: 5px 5px 15px #888888;
-            padding: 10px;
-            z-index: 1000;
-            width: 560px;  /* Tamaño adecuado para el video */
-            height: 350px; /* Altura suficiente para el video */
+            font-family: 'Arial', sans-serif;
+            margin-top: 140px; /* Ajustado para dejar espacio para la barra de búsqueda y el contenedor del texto */
+            box-sizing: border-box;
+            margin-bottom: 120px; /* Para dejar espacio antes del final de la página y la barra de desplazamiento */
         }
 
-        .audio-popup iframe {
+        .text {
             width: 100%;
-            height: 100%;
-            border-radius: 10px;
+            max-width: 1000px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            box-shadow: 3px 3px 10px #888888;
+            padding: 10px;
+        }
+
+        .image {
+            width: 100%;
+            max-width: 970px;
+            height: auto;
+            border: 3px solid #000000;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 5px 5px 15px #888888;
+        }
+
+        .image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
         }
 
         .audio-popup-trigger {
@@ -135,6 +201,20 @@
             font-family: 'Arial', sans-serif;
         }
 
+        .audio-popup {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 15px #888888;
+            padding: 10px;
+            z-index: 1000;
+        }
+
         .audio-popup .close-button {
             background-color: #ff0000;
             color: #ffffff;
@@ -145,6 +225,54 @@
             font-family: 'Arial', sans-serif;
             box-shadow: 2px 2px 5px #888888;
             margin-bottom: 10px;
+        }
+
+        .rainbow-text {
+            position: absolute;
+            top: 150px; /* Ajustado para que aparezca entre los contenedores */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 150px; /* Aumentado para mayor visibilidad */
+            font-weight: bold;
+            white-space: nowrap;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-move 5s linear infinite, rgb-move 3s linear infinite, spin 3s linear infinite;
+            z-index: 1000;
+            text-shadow: 2px 2px 5px #888888;
+        }
+
+        @keyframes rainbow-move {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes rgb-move {
+            0% { color: red; }
+            25% { color: orange; }
+            50% { color: yellow; }
+            75% { color: green; }
+            100% { color: blue; }
+        }
+
+        @keyframes spin {
+            0% { transform: translateX(-50%) rotateY(0deg); }
+            100% { transform: translateX(-50%) rotateY(360deg); }
+        }
+
+        /* Estilo para el video secreto */
+        #secret-video {
+            position: absolute;
+            top: 300px; /* Ajustado para que aparezca debajo del texto secreto */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 5px 5px 15px #888888;
         }
 
         /* Media Queries para diseño responsive */
@@ -165,6 +293,11 @@
             .image {
                 max-width: 100%;
                 height: auto;
+            }
+
+            .rainbow-text {
+                font-size: 100px;
+                top: 100px;
             }
 
             #secret-video {
@@ -197,6 +330,11 @@
                 margin-bottom: 60px;
             }
 
+            .rainbow-text {
+                font-size: 70px;
+                top: 80px;
+            }
+
             #secret-video {
                 width: 100%;
                 max-width: 400px;
@@ -227,44 +365,72 @@
     </div>
 </div>
 
-<!-- Contenedor del texto (ahora estático) -->
+<!-- Contenedor del texto en movimiento -->
 <div class="marquee-container">
     <div class="marquee-text">
-        <h3>Mi pequeño sol...</h3> <!-- Texto centrado estático -->
+        <marquee
+ width="1300"
+ behavior="alternate"
+ <marquee behavior= "alternate"><img src="https://i.pinimg.com/originals/15/1d/a9/151da98ceef9a9a54a7eac4af04be712.gif" width="50px" height="50px" alt=""> <font color="#000000" size= 20 font-family="Courier New, courier, monospace" text-align: center <h3>FELIZ ANIVERSARIO MI BRIANITA HERMOSA</h3> </font><img src="https://i.pinimg.com/originals/15/1d/a9/151da98ceef9a9a54a7eac4af04be712.gif" width="50px" height="50px" alt=""></marquee>
     </div>
 </div>
 
 <!-- Contenido principal -->
 <div class="content">
     <div class="text">
-        <p>Escribo esto con la esperanza de que en algún momento lo leas, aunque quizás nunca lo harás. Y sí, quizás al final no se dio, quizás aún tras tanto esfuerzo no se dio, finalmente ha terminado así, estoy bloqueado de todas tus redes, a excepción de Instagram, pero no tenemos ni una palabra más para compartir el uno con el otro. A pesar de tenerte tan lejos de mi vida ahora, estás en lo más profundo de mi corazón y lo más cerca posible a mí y a mis pensamientos, dejaste recuerdos y una hermosa memoria llena de increíbles momentos a tu lado, puedo decir con seguridad que eres mi primer amor y quizás por eso dueles tanto, pero quizás por eso también me llena de felicidad recordarte, recordarnos. Si pudiera regresar el tiempo y hacer las cosas mejor, claro que lo haría, sabes? Aún sostengo que no me equivoqué de persona, simplemente no era el momento correcto para ninguno de los dos. Mentiría si te dijera que no me ahogo en un mar de lágrimas mientras escribo esto, mentiría si te dijera que no me arrepiento de haberte perdido, mentiría si te dijera que no te extraño, mentiría si te dijera que no te pienso cada día que pasa, mentiría si te dijera que no me matan las ganas de escribirte, saber de ti, contarte sobre mí, mentiría si te dijera que no me muero de ganas por verte sonreír una vez más y bailar a tu lado, por siempre bailaremos juntos, tomados de la mano en mi mente. Vivirás en mi corazón y en mi cabeza por siempre, te has ganado un lugar en cada rincón de mi ser, un lugar que nadie ni nada es capaz de revocarte. Por siempre serás mi mejor amiga, mi hermana, mi compañera de vida, por siempre te añoraré en cada sueño y por siempre te pensaré y extrañaré, mi sol, mi hermoso sol, aquel que llenó de luz mi vida y aquel que brindó la más cálida luz a cada uno de mis días, Briana Alessandra Velara Negrete, te amo y, por siempre lo haré.
-
- - Atentamente:
-
-Ángel Balam Soriano Martínez. "Tu luna" </p>
+        <p>¿Quién diría que nos tomaría 2 años y 11 meses de duro trabajo poder festejar este único mes como novios? Estoy eternamente agradecido de compartir mis días contigo, de hablarte de mí, de reír a tu lado, de besarte, de tomar tu mano, de que compartas tus días conmigo, de que me hables de ti, de que rías a mi lado, estoy eternamente agradecido porque eres y serás la mejor compañera de vida para mí, por siempre amor mío, espero que podamos gozar de muchos más meses y años juntos, espero que tengamos la gracia de poder compartir esta eternidad y las que siguen juntos, como mejores amigos, como novios y como esposos, no estoy jugando cuando digo que amo todo de ti y cuando digo que me quiero casar contigo, mi niña hermosa. ¡FELICIDADES!</p>
+    </div>
+    <div class="image">
+        <img src="https://i.pinimg.com/736x/6e/d3/a2/6ed3a279437c47f7fa627434e4ee7358.jpg" alt="Imagen de novios">
     </div>
 </div>
 
-<!-- Video secreto -->
-<div id="secret-video">
-    <video controls>
-        <source src="mi-video-secreto.mp4" type="video/mp4">
-        Tu navegador no soporta videos HTML5.
-    </video>
-</div>
-
-<!-- Pop-up de audio -->
-<div class="audio-popup-trigger">Nuestra canción, ¿la recuerdas?</div>
+<!-- Reproductor de video de YouTube -->
+<div class="audio-popup-trigger">La canción de nuestra boda ❤️</div>
 <div class="audio-popup">
     <button class="close-button">Cerrar</button>
-    <iframe src="https://www.youtube.com/embed/sq3awlDqAVo" frameborder="0" allowfullscreen width="560" height="315"></iframe>
+    <iframe src="https://www.youtube.com/embed/sq3awlDqAVo" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<!-- Agregar JS si lo necesitas -->
+<!-- Mensaje secreto -->
+<div id="secret-message" class="rainbow-text" style="display: none;">¡Así empezó todo!</div>
+
+<!-- Video emergente -->
+<div id="secret-video">
+    <iframe src="https://www.youtube.com/watch?v=nzY0ECYpUPQ?autoplay=1"></iframe>
+    Tu navegador no soporta la etiqueta de video.
+</div>
 
 <script>
+    // Configuración de las imágenes de la lluvia
+    const imageUrls = [
+        'https://i.pinimg.com/736x/a4/8c/04/a48c04f7e95802b1ddad18808dee4c99.jpg', 
+        'https://stickerly.pstatic.net/sticker_pack/GKxNn91GyJYvRhMszE6eOQ/XJ2XIR/25/84108036.png',
+        'https://pbs.twimg.com/media/GGSkqQ7W0AAKxAd.jpg'
+    ];
 
- // Mostrar el reproductor de audio
+    // Configuración de la lluvia
+    const numberOfRaindrops = 50; 
+
+    function createRaindrop() {
+        const raindrop = document.createElement('div');
+        raindrop.className = 'raindrop';
+        raindrop.style.backgroundImage = `url(${imageUrls[Math.floor(Math.random() * imageUrls.length)]})`;
+        raindrop.style.left = `${Math.random() * 100}vw`;
+        raindrop.style.top = `-${Math.random() * 100}px`; 
+        document.body.appendChild(raindrop);
+
+        // Animación de caída
+        const animationDuration = Math.random() * 5 + 5; // Duración aleatoria entre 5s y 10s
+        raindrop.style.animation = `fall ${animationDuration}s linear infinite`;
+    }
+
+    // Crear y animar las gotas de lluvia
+    for (let i = 0; i < numberOfRaindrops; i++) {
+        createRaindrop();
+    }
+    
+    // Mostrar el reproductor de audio
     const audioPopupTrigger = document.querySelector('.audio-popup-trigger');
     const audioPopup = document.querySelector('.audio-popup');
     const closeButton = document.querySelector('.audio-popup .close-button');
@@ -276,7 +442,34 @@
     closeButton.addEventListener('click', () => {
         audioPopup.style.display = 'none';
     });
-	// Configurar el historial de búsqueda falso
+
+    // Mostrar mensaje secreto al buscar
+    const searchButton = document.getElementById('search-button');
+    const searchBox = document.getElementById('search-box');
+    const secretMessage = document.getElementById('secret-message');
+    const secretVideo = document.getElementById('secret-video');
+
+    searchButton.addEventListener('click', () => {
+        if (searchBox.value === '16/06/2024') {
+            secretMessage.style.display = 'block';
+            secretVideo.style.display = 'block';
+
+            // Reproducir video
+            secretVideo.play();
+
+            // Ocultar mensaje y video cuando termine el video
+            secretVideo.addEventListener('ended', () => {
+                secretMessage.style.display = 'none';
+                secretVideo.style.display = 'none';
+            });
+        } else {
+            secretMessage.style.display = 'none';
+            secretVideo.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Configurar el historial de búsqueda falso
         const searchBox = document.getElementById('search-box');
         const searchButton = document.getElementById('search-button');
 
@@ -298,9 +491,10 @@
 
         // Añadir historial de búsqueda
         const historyItems = [
-            'Gracias',
-            'Por todo',
-            'Mi Hermoso Sol'
+            'como sé si me ama igual q yo a ella?',
+            '¿soy lo suficientemente atractivo para brianana?',
+            'ola t amo guapa :3',
+            'como saber si enserio le gsuto'
         ];
 
         historyItems.forEach(item => {
@@ -335,4 +529,3 @@
 
 </body>
 </html>
-
