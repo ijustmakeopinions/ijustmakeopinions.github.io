@@ -262,6 +262,77 @@
 
 <!-- Agregar JS si lo necesitas -->
 
+<script>
+
+ // Mostrar el reproductor de audio
+    const audioPopupTrigger = document.querySelector('.audio-popup-trigger');
+    const audioPopup = document.querySelector('.audio-popup');
+    const closeButton = document.querySelector('.audio-popup .close-button');
+
+    audioPopupTrigger.addEventListener('click', () => {
+        audioPopup.style.display = 'flex';
+    });
+
+    closeButton.addEventListener('click', () => {
+        audioPopup.style.display = 'none';
+    });
+	// Configurar el historial de búsqueda falso
+        const searchBox = document.getElementById('search-box');
+        const searchButton = document.getElementById('search-button');
+
+        // Crear un elemento para mostrar el historial de búsqueda
+        const historyContainer = document.createElement('div');
+        historyContainer.className = 'search-history';
+        historyContainer.style.display = 'none';
+        historyContainer.style.position = 'absolute';
+        historyContainer.style.top = '50px';
+        historyContainer.style.left = '0';
+        historyContainer.style.width = '100%';
+        historyContainer.style.maxWidth = 'calc(100% - 20px)';
+        historyContainer.style.backgroundColor = '#c0c0c0';
+        historyContainer.style.border = '1px solid #000000';
+        historyContainer.style.boxShadow = '0px 0px 10px #888888';
+        historyContainer.style.zIndex = '1000';
+        historyContainer.style.padding = '10px';
+        historyContainer.style.boxSizing = 'border-box';
+
+        // Añadir historial de búsqueda
+        const historyItems = [
+            'Gracias',
+            'Por todo',
+            'Mi Hermoso Sol'
+        ];
+
+        historyItems.forEach(item => {
+            const div = document.createElement('div');
+            div.textContent = item;
+            div.style.padding = '5px';
+            div.style.borderBottom = '1px solid #000000';
+            div.style.cursor = 'pointer';
+            div.addEventListener('click', () => {
+                searchBox.value = item;
+                historyContainer.style.display = 'none'; // Ocultar el historial al seleccionar un elemento
+            });
+            historyContainer.appendChild(div);
+        });
+
+        // Añadir el contenedor del historial de búsqueda al body
+        document.body.appendChild(historyContainer);
+
+        // Mostrar el historial de búsqueda cuando el usuario está escribiendo
+        searchBox.addEventListener('focus', () => {
+            historyContainer.style.display = 'block';
+        });
+
+        // Ocultar el historial cuando el usuario hace clic fuera del input
+        document.addEventListener('click', (event) => {
+            if (!searchBox.contains(event.target) && !historyContainer.contains(event.target)) {
+                historyContainer.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
 
